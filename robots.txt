@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gilded-vacherin-5f8b85.netlify.app/sitemap.xml
+Sitemap: https://gabor2007.github.io/SmartSp-jz/sitemap.xml

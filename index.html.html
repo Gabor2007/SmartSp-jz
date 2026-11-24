@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="hu" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartSpájz – Intelligens Otthoni Rendszerező, Spájz & Bevásárlólista</title>
+    <meta name="description" content="SmartSpájz (SmartSpajz): ingyenes digitális spájz és hűtő rendszerező, vonalkód-leolvasó, bevásárlólista, lejárati figyelő és kuka-emlékeztető egy helyen.">
+    <meta name="keywords" content="SmartSpájz, SmartSpajz, digitális spájz, hűtő rendszerező, bevásárlólista app, lejárati dátum figyelő, kuka naptár, otthoni rendszerező">
+    <meta name="author" content="SmartSpájz">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://gilded-vacherin-5f8b85.netlify.app/">
+
+    <!-- Open Graph / Közösségi megosztás előnézet -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="hu_HU">
+    <meta property="og:site_name" content="SmartSpájz">
+    <meta property="og:title" content="SmartSpájz – Intelligens Otthoni Rendszerező">
+    <meta property="og:description" content="Tartsd rendben a spájzod és a hűtőd, mentsd meg a lejáró ételeket, kezeld a bevásárlólistád és ne felejtsd el kitenni a kukát!">
+    <meta property="og:url" content="https://gilded-vacherin-5f8b85.netlify.app/">
+    <meta property="og:image" content="https://gilded-vacherin-5f8b85.netlify.app/Smart.png">
+
+    <!-- Twitter / X kártya -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="SmartSpájz – Intelligens Otthoni Rendszerező">
+    <meta name="twitter:description" content="Digitális spájz, bevásárlólista, vonalkód-beolvasás és kuka-naptár egy letisztult felületen.">
+    <meta name="twitter:image" content="https://gilded-vacherin-5f8b85.netlify.app/Smart.png">
+
+    <!-- Google strukturált adat (WebApplication) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SmartSpájz",
+      "alternateName": "SmartSpajz",
+      "url": "https://gilded-vacherin-5f8b85.netlify.app/",
+      "description": "Ingyenes digitális spájz és hűtő rendszerező, vonalkód-leolvasó, bevásárlólista és hulladéknaptár.",
+      "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "All",
+      "inLanguage": "hu",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "HUF"
+      }
+    }
+    </script>
+
+    <link rel="icon" type="image/png" href="Smart.png">
+    <link rel="apple-touch-icon" href="Smart.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#0b0f19] text-slate-100 min-h-screen pb-8 font-sans selection:bg-emerald-500 selection:text-white">
+
+    <!-- Navbar -->
+    <header class="border-b border-slate-800/80 bg-[#0b0f19]/85 backdrop-blur-md sticky top-0 z-40 px-3.5 sm:px-6 py-2.5 sm:py-3.5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-stretch md:items-center gap-2.5 md:gap-4">
+            <div class="flex items-center justify-between md:justify-start gap-3">
+                <div class="flex items-center gap-2.5 sm:gap-3">
+                    <img src="Smart.png" alt="SmartSpájz logó" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover shadow-lg shadow-emerald-500/20 border border-emerald-400/20 shrink-0">
+                    <div>
+                        <div class="flex items-center gap-1.5 sm:gap-2">
+                            <h1 class="font-bold text-base sm:text-lg tracking-tight text-white leading-tight">SmartSpájz</h1>
+                            <span class="text-[10px] bg-slate-800 text-slate-300 font-semibold px-2 py-0.5 rounded-full border border-slate-700">v1.1</span>
+                        </div>
+                        <p class="text-[11px] sm:text-xs text-slate-400 leading-tight">Intelligens Otthoni Rendszerező</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Header Badges & Action Buttons -->
+            <div class="flex flex-col sm:flex-row md:flex-row sm:flex-wrap items-stretch sm:items-center gap-2 md:gap-2.5">
+                <!-- Kompakt státuszsáv (mobilon 3 oszlopos, gépen sorban) -->
+                <div class="grid grid-cols-3 sm:flex items-center gap-1.5 sm:gap-2.5">
+                    <div onclick="switchMainTab('pantry')" class="cursor-pointer flex items-center justify-center sm:justify-start gap-1.5 bg-slate-900/90 hover:border-slate-700 border border-slate-800 px-2 sm:px-3 py-1.5 rounded-xl text-[11px] sm:text-xs transition">
+                        <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse shrink-0"></span>
+                        <span class="text-slate-400 truncate">Sürgős:</span>
+                        <span id="urgentCountHeader" class="font-bold text-white">0</span>
+                    </div>
+
+                    <div onclick="switchMainTab('shopping')" class="cursor-pointer flex items-center justify-center sm:justify-start gap-1.5 bg-slate-900/90 hover:border-emerald-500/50 border border-slate-800 px-2 sm:px-3 py-1.5 rounded-xl text-[11px] sm:text-xs transition">
+                        <span class="text-xs sm:text-sm shrink-0">🛒</span>
+                        <span class="text-slate-400 truncate">Lista:</span>
+                        <span id="shoppingCountHeader" class="font-bold text-emerald-400">0</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-center sm:justify-start gap-1.5 bg-slate-900/90 border border-slate-800 px-2 sm:px-3 py-1.5 rounded-xl text-[11px] sm:text-xs">
+                        <span class="text-xs sm:text-base shrink-0">🏛️</span>
+                        <span class="text-slate-400 hidden sm:inline">Kuka:</span>
+                        <span id="nextTrashHeader" class="font-bold text-white truncate">Töltés...</span>
+                    </div>
+                </div>
+
+                <!-- Műveleti gombok (mobilon 3 egyenlő gomb, gépen eredeti elrendezés) -->
+                <div class="grid grid-cols-3 sm:flex items-center gap-1.5 sm:gap-2 md:ml-1">
+                    <div id="authContainer" class="flex items-stretch sm:items-center">
+                        <button onclick="openLoginWidget()" class="w-full sm:w-auto justify-center bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-2.5 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs transition flex items-center gap-1 shadow-md shadow-indigo-600/20">
+                            <span>👤</span>
+                            <span class="truncate">Belépés</span>
+                        </button>
+                    </div>
+
+                    <button onclick="openScannerModal()" class="justify-center bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-2.5 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs transition flex items-center gap-1 shadow-sm">
+                        <span>║▌║</span>
+                        <span class="truncate">Olvasás</span>
+                    </button>
+
+                    <button onclick="handlePrimaryAdd()" class="justify-center bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-2.5 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs transition shadow-lg shadow-emerald-500/20 flex items-center gap-1">
+                        <span id="primaryAddBtnText" class="truncate">+ Új elem</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 pt-5 sm:pt-6 space-y-6">
+
+        <!-- Kuka Napok & Hulladéknaptár Section -->
+        <section class="space-y-3">
+            <div>
+                <h2 class="text-base font-bold text-slate-100 flex items-center gap-2">
+                    <span class="text-emerald-400">♻️</span> Kuka Napok & Hulladéknaptár
+                </h2>
+                <p class="text-xs text-slate-400">A megadott napok <b>estéjén</b> kell kitenni a kukákat reggeli elszállításra! (Kattints a kártyára a nap módosításához)</p>
+            </div>
+            
+            <div id="trashGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- JS tölti fel -->
+            </div>
+        </section>
+
+        <!-- MI Receptgenerátor Banner -->
+        <section class="relative overflow-hidden bg-gradient-to-r from-indigo-950/60 via-slate-900 to-slate-900 border border-indigo-500/30 rounded-2xl p-5 sm:p-6 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div class="space-y-1.5 max-w-2xl">
+                <div class="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-1 rounded-full mb-1">
+                    <span>⏳</span> Mentsd meg az ételeidet!
+                </div>
+                <h3 class="text-lg font-bold text-white">MI Receptgenerátor lejáró alapanyagokból</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Az app automatikusan összegyűjti az 1-3 napon belül lejáró ételeidet, és pillanatok alatt egy szuper vacsoraötletet készít belőlük.
+                </p>
+                <div id="recipeResult" class="hidden pt-2 text-xs text-indigo-200 font-medium"></div>
+            </div>
+            
+            <button onclick="generateAIRecipe()" class="w-full md:w-auto justify-center shrink-0 bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-5 py-3 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center gap-2">
+                <span>🍽️</span> Mit főzzek ma? (Recept Generálása)
+            </button>
+        </section>
+
+        <!-- NÉZETVÁLTÓ FÜLEK: SPÁJZ vs. BEVÁSÁRLÓLISTA -->
+        <div class="flex items-center gap-2 bg-slate-900/90 border border-slate-800 p-1.5 rounded-2xl w-full sm:w-fit">
+            <button id="tabBtnPantry" onclick="switchMainTab('pantry')" class="flex-1 sm:flex-initial justify-center px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20">
+                <span>🥫 Spájz & Hűtő</span>
+                <span id="tabBadgePantry" class="bg-slate-950/20 text-slate-950 px-1.5 py-0.5 rounded-md text-[10px]">0</span>
+            </button>
+            <button id="tabBtnShopping" onclick="switchMainTab('shopping')" class="flex-1 sm:flex-initial justify-center px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 text-slate-400 hover:text-white">
+                <span>🛒 Bevásárlólista</span>
+                <span id="tabBadgeShopping" class="bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded-md text-[10px]">0</span>
+            </button>
+        </div>
+
+        <!-- 1. SZEKCIÓ: Digitális Spájz & Hűtő Polcok -->
+        <section id="pantrySection" class="space-y-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-base font-bold text-slate-100 flex items-center gap-2">
+                        <span>🥫</span> Digitális Spájz & Hűtő Polcok
+                    </h2>
+                    <p class="text-xs text-slate-400">Tekintsd át az otthon lévő készleteidet, vagy tedd át a fogyó tételeket a bevásárlólistára (🛒)</p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                    <input type="text" id="searchInput" oninput="filterPantry()" placeholder="Keresés..." class="bg-slate-900 border border-slate-800 rounded-xl px-3.5 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 w-full sm:w-48">
+                    
+                    <select id="categoryFilter" onchange="filterPantry()" class="flex-1 sm:flex-initial bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-emerald-500">
+                        <option value="all">Minden kategória</option>
+                        <option value="Hűtő">Hűtő</option>
+                        <option value="Mélyhűtő">Mélyhűtő</option>
+                        <option value="Kamra">Kamra</option>
+                    </select>
+
+                    <select id="statusFilter" onchange="filterPantry()" class="flex-1 sm:flex-initial bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-emerald-500">
+                        <option value="all">Minden állapot</option>
+                        <option value="urgent">🔴 Sürgős</option>
+                        <option value="warning">🟡 Lassan lejár</option>
+                        <option value="safe">🟢 Friss</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="pantryGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- JS tölti fel -->
+            </div>
+        </section>
+
+        <!-- 2. SZEKCIÓ: Bevásárlólista Mód -->
+        <section id="shoppingSection" class="hidden space-y-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-base font-bold text-slate-100 flex items-center gap-2">
+                        <span>🛒</span> Bevásárlólista & Otthoni Szükségletek
+                    </h2>
+                    <p class="text-xs text-slate-400">Pipáld ki a boltban, vagy helyezd át egy gombnyomással a Spájzba a megvett termékeket</p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="addUrgentToShopping()" class="bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 font-semibold px-3.5 py-2 rounded-xl text-xs transition flex items-center gap-1.5">
+                        <span>⚡ Lejárók felvétele listára</span>
+                    </button>
+                    <button onclick="clearCheckedShopping()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-semibold px-3.5 py-2 rounded-xl text-xs transition">
+                        <span>🧹 Kipipáltak törlése</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Gyors hozzáadó sáv -->
+            <form onsubmit="quickAddShoppingItem(event)" class="bg-slate-900/90 border border-slate-800 p-3 rounded-2xl flex flex-col sm:flex-row gap-2.5 shadow-lg">
+                <input type="text" id="quickShopName" placeholder="Mi kell otthonra? (pl. Tej, Szemeteszsák, WC-papír...)" class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500" required>
+                
+                <input type="text" id="quickShopAmount" placeholder="Mennyiség (pl. 2 db)" class="sm:w-36 bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+                
+                <select id="quickShopCategory" class="sm:w-44 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-slate-300 focus:outline-none focus:border-emerald-500">
+                    <option value="Élelmiszer">🥛 Élelmiszer</option>
+                    <option value="Háztartás & Vegyi">🧼 Háztartás & Vegyi</option>
+                    <option value="Zöldség & Gyümölcs">🍎 Zöldség & Gyümölcs</option>
+                    <option value="Egyéb otthoni">🏠 Egyéb otthoni</option>
+                </select>
+
+                <button type="submit" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-xs transition shrink-0 shadow-md shadow-emerald-500/20">
+                    + Listára teszem
+                </button>
+            </form>
+
+            <!-- Bevásárlólista kártyák -->
+            <div id="shoppingGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- JS tölti fel -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-7xl mx-auto px-4 sm:px-6 mt-12 pt-6 border-t border-slate-800/80 text-xs text-slate-400">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div class="flex items-center gap-2.5">
+                <img src="Smart.png" alt="SmartSpájz logó" class="w-6 h-6 rounded-lg object-cover border border-slate-700 shrink-0">
+                <div>
+                    <span class="font-bold text-slate-200">SmartSpájz</span>
+                    <span class="text-slate-500">• Intelligens Otthoni Rendszerező (v1.1)</span>
+                </div>
+            </div>
+
+            <p class="text-[11px] text-slate-500 max-w-md leading-relaxed">
+                Ingyenes, közösségi tesztfázisban lévő otthoni rendszerező. A készleteid alapértelmezetten a saját eszközödön maradnak.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-4 text-[11px]">
+                <button onclick="openInfoModal()" class="hover:text-emerald-400 transition font-medium">
+                    Rólunk & Adatkezelés
+                </button>
+                <a href="https://instagram.com/smartspajz" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition">
+                    Instagram
+                </a>
+                <a href="mailto:hello@smartspajz.hu" class="hover:text-emerald-400 transition">
+                    Kapcsolat
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- RÓLUNK & ADATKEZELÉS MODAL -->
+    <div id="infoModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 w-full max-w-md space-y-4 shadow-2xl max-h-[85vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2.5">
+                    <img src="Smart.png" alt="SmartSpájz logó" class="w-7 h-7 rounded-lg object-cover border border-emerald-400/20">
+                    <div>
+                        <h3 class="font-bold text-slate-100 text-sm">SmartSpájz – Rólunk & Adatkezelés</h3>
+                        <p class="text-[10px] text-slate-400">Verzió: v1.1 • Nem bevételszerző projekt</p>
+                    </div>
+                </div>
+                <button onclick="closeInfoModal()" class="text-slate-400 hover:text-white font-bold p-1">✕</button>
+            </div>
+
+            <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
+                <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-1.5">
+                    <p class="font-bold text-emerald-400">🏠 Mi az a SmartSpájz?</p>
+                    <p class="text-[11px] text-slate-400">
+                        A SmartSpájz egy ingyenes otthoni készlet- és háztartás-rendszerező webalkalmazás, amellyel nyomon követheted a spájzod és hűtőd tartalmát, a lejárati dátumokat, a bevásárlólistádat és a hulladékszállítási napokat.
+                    </p>
+                </div>
+
+                <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-1.5">
+                    <p class="font-bold text-indigo-400">🔒 Hogyan kezeljük az adataidat?</p>
+                    <ul class="text-[11px] text-slate-400 space-y-1.5 list-disc pl-4">
+                        <li><b>Helyi tárolás (localStorage):</b> A spájz-tételeid, bevásárlólistád, kuka-beállításaid és a gyorsítótárazott vonalkódnevek a saját böngésződben tárolódnak, más felhasználók nem látnak bele.</li>
+                        <li><b>Fiókos belépés:</b> Opcionális bejelentkezésnél a Netlify Identity hitelesítési szolgáltatása kezeli a belépési adatokat (e-mail cím, azonosító).</li>
+                        <li><b>Vonalkód-keresés:</b> Beolvasáskor a rendszer a vonalkódszámot elküldheti nyílt termékadatbázisoknak (Open Food Facts / Open Beauty Facts / Open Products Facts) a terméknév lekéréséhez.</li>
+                        <li><b>Nincs reklámkövetés:</b> Az oldal nem használ marketing- vagy reklámcélú követősütiket.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-slate-950 p-3.5 rounded-xl border border-slate-800 space-y-1.5">
+                    <p class="font-bold text-slate-200">ℹ️ Fontos tudnivaló & Elérhetőség</p>
+                    <p class="text-[11px] text-slate-400">
+                        Az alkalmazás tájékoztató jellegű segítséget nyújt – fogyasztás előtt mindig ellenőrizd a termék csomagolásán szereplő hivatalos minőségmegőrzési vagy fogyaszthatósági időt.
+                    </p>
+                    <p class="text-[11px] text-slate-400 pt-1">
+                        Kérdés, ötlet vagy adattörlési kérés esetén írj nekünk: <a href="mailto:hello@smartspajz.hu" class="text-emerald-400 underline">hello@smartspajz.hu</a> vagy üzenj Instagramon (<a href="https://instagram.com/smartspajz" target="_blank" rel="noopener noreferrer" class="text-emerald-400 underline">@smartspajz</a>).
+                    </p>
+                </div>
+            </div>
+
+            <div class="pt-1">
+                <button onclick="closeInfoModal()" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-xs transition">Rendben, bezárás</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFIL / STATISZTIKA MODAL -->
+    <div id="profileModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 w-full max-w-sm space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">👤</span>
+                    <div>
+                        <h3 id="profileModalName" class="font-bold text-slate-100 text-sm">Felhasználó</h3>
+                        <p id="profileModalEmail" class="text-[10px] text-slate-400">email@cím.hu</p>
+                    </div>
+                </div>
+                <button onclick="closeProfileModal()" class="text-slate-400 hover:text-white font-bold p-1">✕</button>
+            </div>
+
+            <div class="space-y-3">
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2">
+                    <p class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                        <span>📊</span> Spájz & Lista Statisztika
+                    </p>
+                    <div class="grid grid-cols-3 gap-2 text-xs">
+                        <div class="bg-slate-900 p-2 rounded-lg border border-slate-800/60">
+                            <span class="text-slate-400 block text-[10px]">Spájzban:</span>
+                            <span id="statTotalItems" class="font-bold text-white text-sm">0 db</span>
+                        </div>
+                        <div class="bg-slate-900 p-2 rounded-lg border border-slate-800/60">
+                            <span class="text-slate-400 block text-[10px]">Sürgős:</span>
+                            <span id="statUrgentItems" class="font-bold text-rose-400 text-sm">0 db</span>
+                        </div>
+                        <div class="bg-slate-900 p-2 rounded-lg border border-slate-800/60">
+                            <span class="text-slate-400 block text-[10px]">Listán:</span>
+                            <span id="statShoppingItems" class="font-bold text-emerald-400 text-sm">0 db</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2 text-xs">
+                    <p class="text-slate-400 font-semibold mb-1">Helyek szerinti bontás:</p>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-900">
+                        <span class="text-slate-300">🧊 Hűtő:</span>
+                        <span id="statFridgeCount" class="font-bold text-white">0 db</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1 border-b border-slate-900">
+                        <span class="text-slate-300">🥫 Kamra:</span>
+                        <span id="statPantryCount" class="font-bold text-white">0 db</span>
+                    </div>
+                    <div class="flex justify-between items-center py-1">
+                        <span class="text-slate-300">❄️ Mélyhűtő:</span>
+                        <span id="statFreezerCount" class="font-bold text-white">0 db</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-2 pt-2">
+                <button onclick="closeProfileModal()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium transition">Bezárás</button>
+                <button onclick="window.netlifyIdentity.logout(); closeProfileModal();" class="w-full py-2.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold rounded-xl text-xs transition">Kijelentkezés</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kamera Scanner Modal -->
+    <div id="scannerModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-50 hidden flex-col justify-between p-4">
+        <div class="flex justify-between items-center max-w-md mx-auto w-full pt-2">
+            <h3 class="font-bold text-slate-100 text-sm">Vonalkód Beolvasása</h3>
+            <button onclick="closeScannerModal()" class="text-slate-400 hover:text-white text-lg font-bold p-1">✕</button>
+        </div>
+        
+        <div class="my-auto w-full max-w-sm mx-auto overflow-hidden rounded-2xl border border-slate-800 bg-black shadow-2xl relative">
+            <div id="reader" class="w-full min-h-[180px]"></div>
+        </div>
+
+        <div class="max-w-sm mx-auto w-full space-y-3 pb-4">
+            <p id="scannerStatus" class="text-center text-xs text-slate-400">Tartsd kb. 15-20 cm-re a kamerától a vonalkódot (iPhone-on a fotózás gyakran élesebb)...</p>
+            
+            <label class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold py-2.5 px-4 rounded-xl text-xs transition border border-slate-700 flex items-center justify-center gap-2 cursor-pointer shadow-sm">
+                <span>📸 Fotó készítése gyári kamerával (Éles)</span>
+                <input id="scannerFileInput" type="file" accept="image/*" capture="environment" onchange="scanImageFile(this)" class="hidden">
+            </label>
+
+            <div class="flex gap-2 bg-slate-900 p-2 rounded-xl border border-slate-800">
+                <input type="text" id="manualBarcode" inputmode="numeric" placeholder="Vagy írd be a vonalkódot..." class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                <button onclick="searchManualBarcode()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs transition shrink-0">Keresés</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TERMÉK HOZZÁADÁS / SZERKESZTÉS MODAL -->
+    <div id="itemModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 w-full max-w-sm space-y-4 shadow-2xl">
+            <h3 id="itemModalTitle" class="font-bold text-slate-100 text-sm">Termék adatai és lejárata</h3>
+            
+            <div class="space-y-3">
+                <div>
+                    <label class="text-[11px] text-slate-400 block mb-1">Termék neve (szerkeszthető):</label>
+                    <input type="text" id="modalItemName" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-[11px] text-slate-400 block mb-1">Hely (Kamra/Hűtő):</label>
+                        <select id="modalItemLocation" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                            <option value="Hűtő">Hűtő</option>
+                            <option value="Kamra">Kamra</option>
+                            <option value="Mélyhűtő">Mélyhűtő</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 block mb-1">Mennyiség:</label>
+                        <input type="text" id="modalItemAmount" value="1 db" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[11px] text-slate-400 block mb-1">Pontos lejárati dátum:</label>
+                    <input type="date" id="modalItemDate" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                </div>
+            </div>
+
+            <div class="flex gap-2 pt-2">
+                <button onclick="closeItemModal()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium transition">Mégse</button>
+                <button onclick="saveModalItem()" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-xs transition">Mentés a Spájzba</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kuka Állítás Modal -->
+    <div id="trashModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 w-full max-w-xs space-y-4 shadow-2xl">
+            <h3 id="trashModalTitle" class="font-bold text-slate-100 text-center text-sm">Kuka szállítási napja</h3>
+            <div class="space-y-1.5">
+                <label class="text-[11px] text-slate-400">Válassz szállítási napot:</label>
+                <select id="trashDaySelect" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                    <option value="-1">🚫 Nincs szállítás a körzetben</option>
+                    <option value="1">Hétfő</option>
+                    <option value="2">Kedd</option>
+                    <option value="3">Szerda</option>
+                    <option value="4">Csütörtök</option>
+                    <option value="5">Péntek</option>
+                    <option value="6">Szombat</option>
+                    <option value="0">Vasárnap</option>
+                </select>
+            </div>
+            <div class="flex gap-2 pt-1">
+                <button onclick="closeTrashModal()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-medium transition">Mégse</button>
+                <button onclick="saveTrashSetting()" class="w-full py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl text-xs transition">Mentés</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Logika -->
+    <script>
+        let currentUser = null;
+        let trashSchedule = [];
+        let pantryItems = [];
+        let shoppingItems = [];
+        let activeTab = 'pantry';
+        let movingShoppingId = null;
+        let lastScannedBarcode = null;
+        const BARCODE_CACHE_KEY = 'smartspajz_barcode_cache_v1';
+
+        function openInfoModal() {
+            document.getElementById('infoModal').classList.remove('hidden');
+            document.getElementById('infoModal').classList.add('flex');
+        }
+
+        function closeInfoModal() {
+            document.getElementById('infoModal').classList.add('hidden');
+            document.getElementById('infoModal').classList.remove('flex');
+        }
+
+        function getStorageKeys() {
+            const userId = currentUser ? currentUser.id : 'guest';
+            return {
+                trashKey: `trashSchedule_${userId}`,
+                pantryKey: `pantryItems_${userId}`,
+                shoppingKey: `shoppingItems_${userId}`
+            };
+        }
+
+        function loadBarcodeCache() {
+            try {
+                return JSON.parse(localStorage.getItem(BARCODE_CACHE_KEY)) || {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function saveBarcodeToCache(code, name) {
+            if (!code || !name || name.startsWith('Termék (')) return;
+            try {
+                const cache = loadBarcodeCache();
+                cache[code] = name;
+                localStorage.setItem(BARCODE_CACHE_KEY, JSON.stringify(cache));
+            } catch (e) {}
+        }
+
+        function loadUserData() {
+            const keys = getStorageKeys();
+            
+            const defaultTrash = [
+                { id: 'kommunalis', name: 'Kommunális Hulladék', day: 2, icon: '🗑️' },
+                { id: 'szelektiv', name: 'Szelektív Műanyag', day: 4, icon: '🟡' },
+                { id: 'papir', name: 'Papír Hulladék', day: 5, icon: '🔵' },
+                { id: 'zold', name: 'Zöldhulladék / Kert', day: 1, icon: '🟢' }
+            ];
+
+            const defaultPantry = [
+                { id: 1, name: "Csirkemell filé", location: "Hűtő", amount: "500g", date: "2026-11-28" },
+                { id: 2, name: "Tejföl 20%", location: "Hűtő", amount: "1 doboz", date: "2026-11-24" },
+                { id: 3, name: "Banán", location: "Kamra", amount: "1 kg", date: "2026-11-25" }
+            ];
+
+            const defaultShopping = [
+                { id: 101, name: "Teljes kiőrlésű kenyér", amount: "1 db", category: "Élelmiszer", checked: false },
+                { id: 102, name: "Szemeteszsák (60L)", amount: "1 tekercs", category: "Háztartás & Vegyi", checked: false }
+            ];
+
+            try {
+                trashSchedule = JSON.parse(localStorage.getItem(keys.trashKey)) || defaultTrash;
+                pantryItems = JSON.parse(localStorage.getItem(keys.pantryKey)) || defaultPantry;
+                shoppingItems = JSON.parse(localStorage.getItem(keys.shoppingKey)) || defaultShopping;
+            } catch (e) {
+                trashSchedule = defaultTrash;
+                pantryItems = defaultPantry;
+                shoppingItems = defaultShopping;
+            }
+
+            renderTrashGrid();
+            renderPantry();
+            renderShoppingList();
+        }
+
+        function saveShoppingData() {
+            const keys = getStorageKeys();
+            localStorage.setItem(keys.shoppingKey, JSON.stringify(shoppingItems));
+            renderShoppingList();
+        }
+
+        function switchMainTab(tab) {
+            activeTab = tab;
+            const pantrySec = document.getElementById('pantrySection');
+            const shoppingSec = document.getElementById('shoppingSection');
+            const btnPantry = document.getElementById('tabBtnPantry');
+            const btnShopping = document.getElementById('tabBtnShopping');
+            const badgePantry = document.getElementById('tabBadgePantry');
+            const badgeShopping = document.getElementById('tabBadgeShopping');
+            const primaryAddText = document.getElementById('primaryAddBtnText');
+
+            if (tab === 'pantry') {
+                pantrySec.classList.remove('hidden');
+                shoppingSec.classList.add('hidden');
+
+                btnPantry.className = "flex-1 sm:flex-initial justify-center px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20";
+                badgePantry.className = "bg-slate-950/20 text-slate-950 px-1.5 py-0.5 rounded-md text-[10px]";
+
+                btnShopping.className = "flex-1 sm:flex-initial justify-center px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 text-slate-400 hover:text-white";
+                badgeShopping.className = "bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded-md text-[10px]";
+
+                if (primaryAddText) primaryAddText.innerText = "+ Új elem";
+            } else {
+                pantrySec.classList.add('hidden');
+                shoppingSec.classList.remove('hidden');
+
+                btnShopping.className = "flex-1 sm:flex-initial justify-center px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20";
+                badgeShopping.className = "bg-slate-950/20 text-slate-950 px-1.5 py-0.5 rounded-md text-[10px]";
+
+                btnPantry.className = "flex-1 sm:flex-initial justify-center px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 text-slate-400 hover:text-white";
+                badgePantry.className = "bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded-md text-[10px]";
+
+                if (primaryAddText) primaryAddText.innerText = "+ Listára";
+                setTimeout(() => {
+                    const inp = document.getElementById('quickShopName');
+                    if (inp) inp.focus();
+                }, 50);
+            }
+        }
+
+        function handlePrimaryAdd() {
+            if (activeTab === 'shopping') {
+                const inp = document.getElementById('quickShopName');
+                if (inp) {
+                    inp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    inp.focus();
+                }
+            } else {
+                openAddModal('');
+            }
+        }
+
+        function openLoginWidget() {
+            if (window.netlifyIdentity) {
+                window.netlifyIdentity.open();
+            } else {
+                alert("A bejelentkezési modul éppen betöltődik, kérlek próbáld újra egy pillanat múlva.");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadUserData();
+
+            const script = document.createElement('script');
+            script.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
+            script.async = true;
+            script.onload = () => {
+                if (window.netlifyIdentity) {
+                    window.netlifyIdentity.on("init", user => {
+                        if (user) {
+                            currentUser = user;
+                            updateAuthUI();
+                            loadUserData();
+                        }
+                    });
+                    window.netlifyIdentity.on("login", user => {
+                        currentUser = user;
+                        updateAuthUI();
+                        loadUserData();
+                        window.netlifyIdentity.close();
+                    });
+                    window.netlifyIdentity.on("logout", () => {
+                        currentUser = null;
+                        updateAuthUI();
+                        loadUserData();
+                    });
+                }
+            };
+            document.head.appendChild(script);
+        });
+
+        function updateAuthUI() {
+            const container = document.getElementById('authContainer');
+            if (currentUser) {
+                const name = (currentUser.user_metadata && currentUser.user_metadata.full_name) ? currentUser.user_metadata.full_name : currentUser.email.split('@')[0];
+                container.innerHTML = `
+                    <button onclick="openProfileModal()" class="w-full sm:w-auto justify-center flex items-center gap-1.5 bg-slate-900 border border-indigo-500/30 hover:border-indigo-500/60 px-2.5 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs transition shadow-md shadow-indigo-600/10">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
+                        <span class="text-slate-200 font-semibold truncate max-w-[70px] sm:max-w-none">${name}</span>
+                        <span class="text-[10px] text-slate-400 hidden sm:inline ml-0.5">⚙️ Profil</span>
+                    </button>
+                `;
+            } else {
+                container.innerHTML = `
+                    <button onclick="openLoginWidget()" class="w-full sm:w-auto justify-center bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-2.5 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs transition flex items-center gap-1 shadow-md shadow-indigo-600/20">
+                        <span>👤</span>
+                        <span class="truncate">Belépés</span>
+                    </button>
+                `;
+            }
+        }
+
+        function openProfileModal() {
+            if (!currentUser) return;
+            const name = (currentUser.user_metadata && currentUser.user_metadata.full_name) ? currentUser.user_metadata.full_name : currentUser.email.split('@')[0];
+            
+            document.getElementById('profileModalName').innerText = name;
+            document.getElementById('profileModalEmail').innerText = currentUser.email;
+
+            const total = pantryItems.length;
+            const urgent = pantryItems.filter(i => getDaysLeft(i.date) <= 2).length;
+            const shopOpen = shoppingItems.filter(i => !i.checked).length;
+            const fridge = pantryItems.filter(i => i.location === 'Hűtő').length;
+            const pantry = pantryItems.filter(i => i.location === 'Kamra').length;
+            const freezer = pantryItems.filter(i => i.location === 'Mélyhűtő').length;
+
+            document.getElementById('statTotalItems').innerText = `${total} db`;
+            document.getElementById('statUrgentItems').innerText = `${urgent} db`;
+            document.getElementById('statShoppingItems').innerText = `${shopOpen} db`;
+            document.getElementById('statFridgeCount').innerText = `${fridge} db`;
+            document.getElementById('statPantryCount').innerText = `${pantry} db`;
+            document.getElementById('statFreezerCount').innerText = `${freezer} db`;
+
+            document.getElementById('profileModal').classList.remove('hidden');
+            document.getElementById('profileModal').classList.add('flex');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').classList.add('hidden');
+            document.getElementById('profileModal').classList.remove('flex');
+        }
+
+        function renderTrashGrid() {
+            const container = document.getElementById('trashGrid');
+            const dayNames = ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"];
+            const today = new Date().getDay();
+
+            let nextTrashStr = "Nincs";
+            let minDiff = 999;
+
+            container.innerHTML = trashSchedule.map(t => {
+                let statusBadge = "";
+                let bgClass = "bg-slate-900/80 border-slate-800 hover:border-slate-700";
+                let dayLabel = t.day === -1 ? "Nincs szállítás" : dayNames[t.day];
+
+                if (t.day === -1) {
+                    statusBadge = `<span class="bg-slate-800 text-slate-500 text-[10px] font-bold px-2.5 py-1 rounded-full">Nem aktív</span>`;
+                    bgClass = "bg-slate-900/30 border-slate-800/40 opacity-50";
+                } else {
+                    let diff = (t.day - today + 7) % 7;
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        nextTrashStr = diff === 0 ? "Ma este!" : (diff === 1 ? "Holnap" : dayNames[t.day]);
+                    }
+
+                    if (diff === 0 || diff === 1) {
+                        statusBadge = `<span class="bg-rose-500 text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider animate-pulse shadow-lg shadow-rose-500/30">MA ESTE KITENNI!</span>`;
+                    } else {
+                        statusBadge = `<span class="bg-slate-800 text-slate-400 text-[10px] font-medium px-3 py-1.5 rounded-full">${diff} nap múlva</span>`;
+                    }
+                }
+
+                return `
+                    <div onclick="openTrashModal('${t.id}')" class="${bgClass} p-4 rounded-2xl border transition cursor-pointer shadow-lg flex flex-col justify-between gap-3">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-xl">${t.icon}</span>
+                            <div>
+                                <h3 class="text-xs font-bold text-slate-200">${t.name}</h3>
+                                <p class="text-[11px] text-emerald-400 font-semibold mt-0.5">Szállítás napja: ${dayLabel}</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-slate-800/60">
+                            <span class="text-[10px] text-slate-400">Este kitenni</span>
+                            ${statusBadge}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('nextTrashHeader').innerText = nextTrashStr;
+        }
+
+        let selectedTrashId = null;
+
+        function openTrashModal(id) {
+            selectedTrashId = id;
+            const item = trashSchedule.find(t => t.id === id);
+            document.getElementById('trashModalTitle').innerText = `${item.name}`;
+            document.getElementById('trashDaySelect').value = item.day;
+            document.getElementById('trashModal').classList.remove('hidden');
+        }
+
+        function closeTrashModal() {
+            document.getElementById('trashModal').classList.add('hidden');
+        }
+
+        function saveTrashSetting() {
+            const dayVal = parseInt(document.getElementById('trashDaySelect').value);
+            const item = trashSchedule.find(t => t.id === selectedTrashId);
+            item.day = dayVal;
+            
+            const keys = getStorageKeys();
+            localStorage.setItem(keys.trashKey, JSON.stringify(trashSchedule));
+            renderTrashGrid();
+            closeTrashModal();
+        }
+
+        function getDaysLeft(dateStr) {
+            const diffTime = new Date(dateStr) - new Date();
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+        function renderPantry() {
+            const container = document.getElementById('pantryGrid');
+            const searchInputEl = document.getElementById('searchInput');
+            const catFilterEl = document.getElementById('categoryFilter');
+            const statusFilterEl = document.getElementById('statusFilter');
+
+            const searchVal = searchInputEl ? searchInputEl.value.toLowerCase() : '';
+            const catVal = catFilterEl ? catFilterEl.value : 'all';
+            const statusVal = statusFilterEl ? statusFilterEl.value : 'all';
+
+            let filtered = pantryItems.filter(item => {
+                const daysLeft = getDaysLeft(item.date);
+                const matchSearch = item.name.toLowerCase().includes(searchVal);
+                const matchCat = catVal === 'all' || item.location === catVal;
+                let matchStatus = true;
+                if (statusVal === 'urgent') matchStatus = daysLeft <= 2;
+                if (statusVal === 'warning') matchStatus = daysLeft > 2 && daysLeft <= 5;
+                if (statusVal === 'safe') matchStatus = daysLeft > 5;
+
+                return matchSearch && matchCat && matchStatus;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-slate-900/50 border border-dashed border-slate-800 rounded-2xl p-8 text-center text-xs text-slate-400">
+                        Nincs találat a megadott szűrőkkel. Adj hozzá új terméket a <b>+ Új elem</b> vagy a <b>Beolvasás</b> gombbal!
+                    </div>
+                `;
+            } else {
+                container.innerHTML = filtered.map(item => {
+                    const daysLeft = getDaysLeft(item.date);
+                    let badge = `<span class="bg-rose-500/10 text-rose-400 border border-rose-500/20 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Sürgős!</span>`;
+                    if (daysLeft > 2 && daysLeft <= 5) {
+                        badge = `<span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Lassan lejár</span>`;
+                    } else if (daysLeft > 5) {
+                        badge = `<span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Friss</span>`;
+                    }
+
+                    return `
+                        <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl flex flex-col justify-between gap-3 shadow-lg hover:border-slate-700 transition">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full ${daysLeft <= 2 ? 'bg-rose-500' : 'bg-emerald-500'}"></span>
+                                        <h3 class="font-bold text-sm text-white">${item.name}</h3>
+                                    </div>
+                                    <div class="text-[11px] text-slate-500 mt-1 flex items-center gap-2">
+                                        <span>${item.location}</span>
+                                        <span>•</span>
+                                        <span>${item.amount}</span>
+                                    </div>
+                                </div>
+                                ${badge}
+                            </div>
+
+                            <div class="flex justify-between items-center pt-2 border-t border-slate-800/80 text-[11px] text-slate-400">
+                                <div class="flex items-center gap-1.5">
+                                    <span>📅</span>
+                                    <span>Lejárat: <b>${item.date}</b> (${daysLeft} nap)</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <button onclick="movePantryToShopping(${item.id})" class="bg-slate-800 hover:bg-emerald-500/20 text-slate-300 hover:text-emerald-400 border border-slate-700 hover:border-emerald-500/40 px-2 py-1 rounded-lg text-[10px] font-semibold transition" title="Elfogyott / Bevásárlólistára">🛒 Listára</button>
+                                    <button onclick="deleteItem(${item.id})" class="text-slate-600 hover:text-rose-400 transition p-1" title="Törlés">🗑️</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            const urgentCount = pantryItems.filter(i => getDaysLeft(i.date) <= 2).length;
+            const urgentHeader = document.getElementById('urgentCountHeader');
+            const tabBadgePantry = document.getElementById('tabBadgePantry');
+            if (urgentHeader) urgentHeader.innerText = urgentCount;
+            if (tabBadgePantry) tabBadgePantry.innerText = pantryItems.length;
+        }
+
+        function filterPantry() {
+            renderPantry();
+        }
+
+        function deleteItem(id) {
+            pantryItems = pantryItems.filter(i => i.id !== id);
+            const keys = getStorageKeys();
+            localStorage.setItem(keys.pantryKey, JSON.stringify(pantryItems));
+            renderPantry();
+        }
+
+        // --- BEVÁSÁRLÓLISTA LOGIKA ---
+        function movePantryToShopping(id) {
+            const item = pantryItems.find(i => i.id === id);
+            if (!item) return;
+
+            const exists = shoppingItems.some(s => s.name.toLowerCase() === item.name.toLowerCase() && !s.checked);
+            if (!exists) {
+                shoppingItems.unshift({
+                    id: Date.now(),
+                    name: item.name,
+                    amount: item.amount || "1 db",
+                    category: "Élelmiszer",
+                    checked: false
+                });
+                saveShoppingData();
+            }
+
+            if (confirm(`"${item.name}" felkerült a bevásárlólistára!\n\nTöröljük most a spájzból (mert elfogyott)?`)) {
+                deleteItem(id);
+            }
+        }
+
+        function quickAddShoppingItem(e) {
+            e.preventDefault();
+            const nameEl = document.getElementById('quickShopName');
+            const amountEl = document.getElementById('quickShopAmount');
+            const catEl = document.getElementById('quickShopCategory');
+
+            const name = nameEl.value.trim();
+            if (!name) return;
+
+            shoppingItems.unshift({
+                id: Date.now(),
+                name: name,
+                amount: amountEl.value.trim() || "1 db",
+                category: catEl.value || "Élelmiszer",
+                checked: false
+            });
+
+            nameEl.value = "";
+            amountEl.value = "";
+            saveShoppingData();
+        }
+
+        function toggleShoppingCheck(id) {
+            const item = shoppingItems.find(i => i.id === id);
+            if (!item) return;
+            item.checked = !item.checked;
+            saveShoppingData();
+        }
+
+        function deleteShoppingItem(id) {
+            shoppingItems = shoppingItems.filter(i => i.id !== id);
+            saveShoppingData();
+        }
+
+        function clearCheckedShopping() {
+            const checkedCount = shoppingItems.filter(i => i.checked).length;
+            if (checkedCount === 0) {
+                alert("Nincs kipipált tétel a listán.");
+                return;
+            }
+            shoppingItems = shoppingItems.filter(i => !i.checked);
+            saveShoppingData();
+        }
+
+        function addUrgentToShopping() {
+            const urgentItems = pantryItems.filter(i => getDaysLeft(i.date) <= 2);
+            if (urgentItems.length === 0) {
+                alert("Nincs sürgős / lejáró termék a spájzban!");
+                return;
+            }
+            let added = 0;
+            urgentItems.forEach(item => {
+                const exists = shoppingItems.some(s => s.name.toLowerCase() === item.name.toLowerCase() && !s.checked);
+                if (!exists) {
+                    shoppingItems.unshift({
+                        id: Date.now() + Math.floor(Math.random() * 1000),
+                        name: item.name,
+                        amount: item.amount || "1 db",
+                        category: "Élelmiszer",
+                        checked: false
+                    });
+                    added++;
+                }
+            });
+            saveShoppingData();
+            alert(added > 0 ? `${added} lejáró termék felvéve a bevásárlólistára!` : "Minden lejáró termék már szerepel a listán!");
+        }
+
+        function moveShoppingToPantry(id) {
+            const item = shoppingItems.find(i => i.id === id);
+            if (!item) return;
+            movingShoppingId = id;
+            openAddModal(item.name, item.amount);
+        }
+
+        function renderShoppingList() {
+            const container = document.getElementById('shoppingGrid');
+            const openCount = shoppingItems.filter(i => !i.checked).length;
+
+            const headerCounter = document.getElementById('shoppingCountHeader');
+            const tabBadge = document.getElementById('tabBadgeShopping');
+            if (headerCounter) headerCounter.innerText = openCount;
+            if (tabBadge) tabBadge.innerText = openCount;
+
+            if (!container) return;
+
+            if (shoppingItems.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full bg-slate-900/50 border border-dashed border-slate-800 rounded-2xl p-8 text-center text-xs text-slate-400">
+                        A bevásárlólistád jelenleg üres. Írd be felül, mire van szükséged otthonra!
+                    </div>
+                `;
+                return;
+            }
+
+            const sorted = [...shoppingItems].sort((a, b) => Number(a.checked) - Number(b.checked));
+
+            container.innerHTML = sorted.map(item => {
+                const cardOpacity = item.checked ? "opacity-55 border-slate-800/50 bg-slate-900/40" : "border-slate-800 bg-slate-900/90 hover:border-slate-700";
+                const textStrike = item.checked ? "line-through text-slate-500" : "text-white";
+                const checkBtnStyle = item.checked
+                    ? "bg-emerald-500 border-emerald-500 text-slate-950"
+                    : "bg-slate-950 border-slate-700 text-transparent hover:border-emerald-500";
+
+                return `
+                    <div class="${cardOpacity} border p-4 rounded-2xl flex flex-col justify-between gap-3 shadow-lg transition">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="flex items-start gap-3">
+                                <button onclick="toggleShoppingCheck(${item.id})" class="w-5 h-5 mt-0.5 rounded-md border flex items-center justify-center text-xs font-bold transition shrink-0 ${checkBtnStyle}">
+                                    ✓
+                                </button>
+                                <div>
+                                    <h3 class="font-bold text-sm ${textStrike}">${item.name}</h3>
+                                    <div class="text-[11px] text-slate-400 mt-1 flex items-center gap-2">
+                                        <span class="bg-slate-800/90 text-slate-300 px-2 py-0.5 rounded-md">${item.category}</span>
+                                        <span>•</span>
+                                        <span>${item.amount}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center pt-2 border-t border-slate-800/80 text-[11px]">
+                            <button onclick="moveShoppingToPantry(${item.id})" class="bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-1 rounded-lg font-semibold transition flex items-center gap-1">
+                                <span>🧊 Megvettem → Spájzba</span>
+                            </button>
+                            <button onclick="deleteShoppingItem(${item.id})" class="text-slate-600 hover:text-rose-400 transition p-1" title="Törlés">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openAddModal(defaultName = "", defaultAmount = "1 db") {
+            document.getElementById('itemModalTitle').innerText = movingShoppingId
+                ? "Megvett termék elrakása a Spájzba"
+                : "Termék adatai és lejárata";
+            document.getElementById('modalItemName').value = defaultName;
+            document.getElementById('modalItemAmount').value = defaultAmount || "1 db";
+            
+            const d = new Date();
+            d.setDate(d.getDate() + 5);
+            document.getElementById('modalItemDate').value = d.toISOString().split('T')[0];
+
+            document.getElementById('itemModal').classList.remove('hidden');
+            document.getElementById('itemModal').classList.add('flex');
+        }
+
+        function closeItemModal() {
+            movingShoppingId = null;
+            document.getElementById('itemModal').classList.add('hidden');
+            document.getElementById('itemModal').classList.remove('flex');
+        }
+
+        function saveModalItem() {
+            const name = document.getElementById('modalItemName').value.trim();
+            const location = document.getElementById('modalItemLocation').value;
+            const amount = document.getElementById('modalItemAmount').value.trim();
+            const date = document.getElementById('modalItemDate').value;
+
+            if (!name) {
+                alert("Kérlek add meg a termék nevét!");
+                return;
+            }
+
+            if (lastScannedBarcode) {
+                saveBarcodeToCache(lastScannedBarcode, name);
+                lastScannedBarcode = null;
+            }
+
+            pantryItems.unshift({
+                id: Date.now(),
+                name: name,
+                location: location,
+                amount: amount || "1 db",
+                date: date || new Date().toISOString().split('T')[0]
+            });
+
+            const keys = getStorageKeys();
+            localStorage.setItem(keys.pantryKey, JSON.stringify(pantryItems));
+
+            if (movingShoppingId) {
+                shoppingItems = shoppingItems.filter(i => i.id !== movingShoppingId);
+                movingShoppingId = null;
+                saveShoppingData();
+            }
+
+            renderPantry();
+            closeItemModal();
+        }
+
+        let html5QrCode = null;
+        let isScannerStarting = false;
+
+        function getScannerConfig() {
+            const formats = (typeof Html5QrcodeSupportedFormats !== 'undefined')
+                ? [
+                    Html5QrcodeSupportedFormats.EAN_13,
+                    Html5QrcodeSupportedFormats.EAN_8,
+                    Html5QrcodeSupportedFormats.UPC_A,
+                    Html5QrcodeSupportedFormats.UPC_E,
+                    Html5QrcodeSupportedFormats.CODE_128,
+                    Html5QrcodeSupportedFormats.CODE_39,
+                    Html5QrcodeSupportedFormats.QR_CODE
+                ]
+                : undefined;
+
+            return formats ? { formatsToSupport: formats, verbose: false } : { verbose: false };
+        }
+
+        function openScannerModal() {
+            lastScannedBarcode = null;
+            document.getElementById('scannerStatus').innerText = "Kamera indítása... (iPhone-on a fotózás gyakran élesebb)";
+            document.getElementById('scannerModal').classList.remove('hidden');
+            document.getElementById('scannerModal').classList.add('flex');
+
+            if (!window.isSecureContext && location.hostname !== 'localhost') {
+                document.getElementById('scannerStatus').innerText = "A kamera csak HTTPS kapcsolaton indul el. Használd a fotózást vagy a kézi beírást!";
+                return;
+            }
+
+            if (isScannerStarting) return;
+            isScannerStarting = true;
+
+            const startCamera = () => {
+                if (!html5QrCode) {
+                    html5QrCode = new Html5Qrcode("reader", getScannerConfig());
+                }
+
+                html5QrCode.start(
+                    { facingMode: "environment" },
+                    { fps: 12, qrbox: { width: 220, height: 100 }, aspectRatio: 1.5 },
+                    onScanSuccess
+                ).then(() => {
+                    isScannerStarting = false;
+                    document.getElementById('scannerStatus').innerText = "Tartsd kb. 15-20 cm-re a kamerától a vonalkódot...";
+                }).catch(() => {
+                    isScannerStarting = false;
+                    document.getElementById('scannerStatus').innerText = "Élő kamera nem érhető el iPhone-on/böngészőben. Használd a fotózást vagy írd be a kódot!";
+                });
+            };
+
+            if (html5QrCode && html5QrCode.isScanning) {
+                html5QrCode.stop().then(startCamera).catch(startCamera);
+            } else {
+                startCamera();
+            }
+        }
+
+        function closeScannerModal() {
+            isScannerStarting = false;
+            const hideModal = () => {
+                document.getElementById('scannerModal').classList.add('hidden');
+                document.getElementById('scannerModal').classList.remove('flex');
+                const readerEl = document.getElementById('reader');
+                if (readerEl) readerEl.innerHTML = '';
+            };
+
+            if (html5QrCode && html5QrCode.isScanning) {
+                html5QrCode.stop().then(() => {
+                    try { html5QrCode.clear(); } catch (e) {}
+                    html5QrCode = null;
+                    hideModal();
+                }).catch(() => {
+                    html5QrCode = null;
+                    hideModal();
+                });
+            } else {
+                try { if (html5QrCode) html5QrCode.clear(); } catch (e) {}
+                html5QrCode = null;
+                hideModal();
+            }
+        }
+
+        function onScanSuccess(decodedText) {
+            closeScannerModal();
+            fetchProductByBarcode(decodedText.trim());
+        }
+
+        function scanImageFile(input) {
+            if (input.files && input.files[0]) {
+                const imageFile = input.files[0];
+                document.getElementById('scannerStatus').innerText = "Kép feldolgozása...";
+
+                const runFileScan = () => {
+                    if (!html5QrCode) {
+                        html5QrCode = new Html5Qrcode("reader", getScannerConfig());
+                    }
+
+                    html5QrCode.scanFile(imageFile, true)
+                        .then(decodedText => {
+                            input.value = '';
+                            closeScannerModal();
+                            fetchProductByBarcode(decodedText.trim());
+                        })
+                        .catch(() => {
+                            input.value = '';
+                            alert("Nem sikerült vonalkódot felismerni a képen! Próbáld meg közelebbről, jó fényben, vagy írd be manuálisan.");
+                            document.getElementById('scannerStatus').innerText = "Próbáld újra vagy írd be manuálisan.";
+                        });
+                };
+
+                if (html5QrCode && html5QrCode.isScanning) {
+                    html5QrCode.stop().then(runFileScan).catch(runFileScan);
+                } else {
+                    runFileScan();
+                }
+            }
+        }
+
+        function searchManualBarcode() {
+            const code = document.getElementById('manualBarcode').value.trim();
+            if (!code) {
+                alert("Kérlek írd be a vonalkódot!");
+                return;
+            }
+            closeScannerModal();
+            fetchProductByBarcode(code);
+        }
+
+        function extractProductName(data) {
+            if (!data || data.status !== 1 || !data.product) return "";
+            const p = data.product;
+            const rawName = (p.product_name_hu || p.product_name || p.generic_name_hu || p.generic_name || "").trim();
+            const brand = (p.brands || "").split(',')[0].trim();
+
+            if (rawName && brand && !rawName.toLowerCase().includes(brand.toLowerCase())) {
+                return `${brand} - ${rawName}`;
+            }
+            return rawName || brand || "";
+        }
+
+        async function fetchProductByBarcode(code) {
+            lastScannedBarcode = code;
+
+            const cache = loadBarcodeCache();
+            if (cache[code]) {
+                openAddModal(cache[code]);
+                return;
+            }
+
+            const endpoints = [
+                `https://world.openfoodfacts.org/api/v0/product/${encodeURIComponent(code)}.json`,
+                `https://world.openbeautyfacts.org/api/v0/product/${encodeURIComponent(code)}.json`,
+                `https://world.openproductsfacts.org/api/v0/product/${encodeURIComponent(code)}.json`
+            ];
+
+            for (const url of endpoints) {
+                try {
+                    const res = await fetch(url);
+                    if (!res.ok) continue;
+                    const data = await res.json();
+                    const foundName = extractProductName(data);
+                    if (foundName) {
+                        saveBarcodeToCache(code, foundName);
+                        openAddModal(foundName);
+                        return;
+                    }
+                } catch (e) {}
+            }
+
+            openAddModal(`Termék (${code})`);
+        }
+
+        function generateAIRecipe() {
+            const urgent = pantryItems.filter(i => getDaysLeft(i.date) <= 3).map(i => i.name);
+            const resDiv = document.getElementById('recipeResult');
+            resDiv.classList.remove('hidden');
+            if(urgent.length > 0) {
+                resDiv.innerHTML = `🍳 <b>Ajánlott menü:</b> Készíts egy krémes serpenyős tálat: <span class="text-white underline">${urgent.join(', ')}</span> felhasználásával!`;
+            } else {
+                resDiv.innerText = "Minden alapanyagod friss! Nincs sürgős főznivaló.";
+            }
+        }
+    </script>
+</body>
+</html>
